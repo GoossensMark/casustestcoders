@@ -86,6 +86,9 @@ results/        Test reports
 ## Possible improvements
  - make sure all .robot file runs with robotcode
  - verify build response matches json schema
+ - further investigate if can set default selector strategy so that for browser KW's data-testid= isn't required, (set selector prefix?)
+ - When running debugger for browser TC make headless=False for easier debugging
+ 
 
 ## Bugs
  - name doesn't have to be unique when creating new build through API?

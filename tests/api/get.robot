@@ -1,5 +1,7 @@
 *** Settings ***
-Resource    ../../libraries/ApiBuilds.resource
+Resource    ../../libraries/api/ApiBuilds.resource
+Resource    ../../libraries/helpers/files.resource
+Library    FakerLibrary
 
 *** Test Cases ***
 Verify thief build exists
@@ -15,5 +17,11 @@ Create a new invalid build
     Post an build   cleric    strength=10    agility=11    wisdom=3    magic=4    expected_status=400
 
 Create an new build verify its created
-    Post an build   cleric    strength=1    agility=2    wisdom=3    magic=4    expected_status=201
-    GET an build   cleric    404
+    ${build_name}=    FakerLibrary.First Name
+    Post an build   ${build_name}    strength=1    agility=2    wisdom=3    magic=4    expected_status=201
+    ${resp}=    GET an build   ${build_name}
+
+Download a cat picture
+    Clear realtime test data
+    ${image_path}=    Get an cat picture
+    File Should Exist    ${image_path}

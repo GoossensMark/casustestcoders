@@ -3,9 +3,11 @@
 
 # Robot results
 results/
+browser/
 log.html
 report.html
 output.xml
+playwright-log.txt
 
 # Python
 __pycache__/
@@ -14,3 +16,6 @@ __pycache__/
 # IDE
 .vscode/
 .idea/
+
+# Data
+testdata/realtime
