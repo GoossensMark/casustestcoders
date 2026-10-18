@@ -1,5 +1,6 @@
 *** Settings ***
 Variables    ../environment.py
+Resource    ../../libraries/api/ApiBuilds.resource
 Library    Browser
 Library    FakerLibrary
 
@@ -7,6 +8,7 @@ Library    FakerLibrary
 Open play page
     [Arguments]    ${browser}=chromium
     New Browser    ${browser}    headless=False
+    # New Browser    ${browser}
     New Page    ${play_url}
     Wait For Elements State    data-testid=character-name-input    visible    timeout=10s
 
@@ -55,10 +57,28 @@ Select clicker 5 times
     FOR    ${index}    IN RANGE    5
         Select clicker 
     END
-    Wait For Elements State    xpath=//button[@data-testid='clicker-button']/./[1]    visible    timeout=10s
-
+    Wait For Elements State    xpath=//button[@data-testid='clicker-button']/../span[@data-task='clicker']    visible    timeout=10s
+    Get Text    data-testid=toast-container    contains    +1 Level
 
 Type in text field
-    [Arguments]    ${text_field}    ${text}
+    [Arguments]    ${text}
     Fill Text    data-testid=typer-input    ${text}
+    Wait For Elements State    xpath=//input[@data-testid='typer-input']/../span[@data-task='typer']
+    Get Text    data-testid=toast-container    contains    +1 Level
+
+Upload file
+    ${file_path}=    Get an cat picture
+    ${promise}=    Promise To Upload File    ${file_path}
+    Click          data-testid=uploader-input
+    ${upload_result}=    Wait For    ${promise}
+    Wait For Elements State    xpath=//input[@data-testid='uploader-input']/../span[@data-task='uploader']
+    Get Text    data-testid=toast-container    contains    +1 Level
+
+Set slider
+    [Arguments]    ${value}    
+    Fill Text    data-testid=slider-input    ${value}
+    Wait For Elements State    xpath=//span[@data-testid='slider-input']/../span[@data-task='slider']
+
+Verify highest level reached
+     Wait For Elements State    data-testid=max-level-message    visible    timeout=10s
     

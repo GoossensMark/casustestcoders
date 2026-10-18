@@ -26,4 +26,8 @@ Start game with a random character_2
     ${char_name}=    FakerLibrary.First Name
     Enter character name    ${char_name}
     Start new build    character_name=${char_name}    build_type=${build_type}
-    Select clicker
+    Set slider    100
+    # Select clicker 5 times
+    # Type in text field    Lorem Ipsum
+    # Upload file
+    # Verify highest level reached
