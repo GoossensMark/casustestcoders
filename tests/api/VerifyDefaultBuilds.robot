@@ -1,7 +1,7 @@
 *** Settings ***
 Library         DataDriver    file=default_builds.csv
 Test Template   Verify Build
-Resource    ../../libraries/ApiBuilds.resource
+Resource    ../../libraries/api/ApiBuilds.resource
 
 
 *** Test Cases ***
