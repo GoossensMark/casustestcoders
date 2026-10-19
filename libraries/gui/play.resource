@@ -63,7 +63,7 @@ Select clicker 5 times
 Type in text field
     [Arguments]    ${text}
     Fill Text    data-testid=typer-input    ${text}
-    Wait For Elements State    xpath=//input[@data-testid='typer-input']/../span[@data-task='typer']
+    Wait For Elements State    xpath=//input[@data-testid='typer-input']/../span[@data-task='typer']    visible    timeout=10s
     Get Text    data-testid=toast-container    contains    +1 Level
 
 Upload file
@@ -71,13 +71,27 @@ Upload file
     ${promise}=    Promise To Upload File    ${file_path}
     Click          data-testid=uploader-input
     ${upload_result}=    Wait For    ${promise}
-    Wait For Elements State    xpath=//input[@data-testid='uploader-input']/../span[@data-task='uploader']
+    Wait For Elements State    xpath=//input[@data-testid='uploader-input']/../span[@data-task='uploader']    visible    timeout=10s
     Get Text    data-testid=toast-container    contains    +1 Level
 
 Set slider
-    [Arguments]    ${value}    
-    Fill Text    data-testid=slider-input    ${value}
-    Wait For Elements State    xpath=//span[@data-testid='slider-input']/../span[@data-task='slider']
+    [Arguments]    ${value}
+    ${slider}=    Set Variable    xpath=//*[@data-testid='slider-input']//*[@role='slider']
+    ${minimum}=    Get Attribute    ${slider}    aria-valuemin
+    ${maximum}=    Get Attribute    ${slider}    aria-valuemax
+    ${minimum}=    Convert To Integer    ${minimum}
+    ${maximum}=    Convert To Integer    ${maximum}
+    ${target}=    Convert To Integer    ${value}
+    Should Be True    ${minimum} <= ${target} <= ${maximum}    Slider value must be within its minimum and maximum
+    ${steps}=    Evaluate    $target - $minimum
+    Press Keys    ${slider}    Home
+    FOR    ${index}    IN RANGE    ${steps}
+        Press Keys    ${slider}    ArrowRight
+    END
+    ${actual_value}=    Get Attribute    ${slider}    aria-valuenow
+    Should Be Equal As Integers    ${actual_value}    ${target}
+    Wait For Elements State    xpath=//span[@data-testid='slider-input']/../span[@data-task='slider']    visible    timeout=10s
+    Get Text    data-testid=toast-container    contains    +1 Level
 
 Verify highest level reached
      Wait For Elements State    data-testid=max-level-message    visible    timeout=10s
