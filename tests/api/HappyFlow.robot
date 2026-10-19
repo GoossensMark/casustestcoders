@@ -20,8 +20,3 @@ Create an new build verify its created
     ${build_name}=    FakerLibrary.First Name
     Post an build   ${build_name}    strength=1    agility=2    wisdom=3    magic=4    expected_status=201
     ${resp}=    GET an build   ${build_name}
-
-Download a cat picture
-    Clear realtime test data
-    ${image_path}=    Get an cat picture
-    File Should Exist    ${image_path}

@@ -1,0 +1,6 @@
+*** Test Cases ***;${build_name};${strength};${agility};${wisdom};${magic};${name_exists};${expected_status}
+Accept skills at the combined limit;maximum-total;10;0;0;0;false;201
+Accept distributed skills at the combined limit;distributed-total;3;2;3;2;false;201
+Reject a skill above its limit;skill-over-limit;11;0;0;0;false;400
+Reject skills above the combined limit;combined-over-limit;4;3;2;2;false;400
+Reject an existing build name;thief;1;2;3;4;true;409
