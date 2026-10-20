@@ -11,6 +11,7 @@ jobs:
   robot-tests:
     runs-on: ubuntu-latest
     timeout-minutes: 20
+    environment: test
 
     steps:
       - name: Check out repository
@@ -33,6 +34,8 @@ jobs:
 
       - name: Run all Robot Framework tests
         run: xvfb-run --auto-servernum robot --outputdir results tests
+        env:
+          CAT_API_KEY: ${{ secrets.CAT_API_KEY }}
 
       - name: Upload Robot Framework reports
         if: always()

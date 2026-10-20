@@ -36,6 +36,7 @@ Post an build
 
 Get an cat picture
     [Arguments]    ${expected_status}=200
+    Should Not Be Empty    ${cat_key}    msg=Set the CAT_API_KEY environment variable to use the cat API.
     ${headers}=    Create Dictionary    x-api-key=${cat_key}
     CatRequests.Create Session    cat_api    ${cat_url}    headers=${headers}
     ${api_response}=    CatRequests.GET On Session    cat_api    ${EMPTY}

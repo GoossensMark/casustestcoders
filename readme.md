@@ -36,7 +36,27 @@ pip install -r requirements.txt
 rfbrowser init
 ```
 
-## 5. Run Tests
+## 5. Configure the Cat API Key
+
+The cat-picture API test uses a TheCatAPI key. Create an account at [TheCatAPI](https://thecatapi.com/), then get an API key from your account. Keep the key private; do not put it in source files or commit it.
+
+Set `CAT_API_KEY` in the terminal where you will run the tests.
+
+### Windows PowerShell
+
+```powershell
+$env:CAT_API_KEY = "your-cat-api-key"
+```
+
+This sets the key for the current terminal session. Set it again in a new terminal.
+
+### Linux/macOS
+
+```bash
+export CAT_API_KEY="your-cat-api-key"
+```
+
+## 6. Run Tests
 
 With the virtual environment activated, run all Robot Framework tests from the repository root:
 
@@ -50,14 +70,19 @@ To save the generated reports and logs in `results/` instead of the repository r
 robot -d results tests
 ```
 
-## 6. View Reports
+## 7. Configure GitHub Actions
 
-Open:
+The workflow uses the GitHub Environment named `test` and reads `CAT_API_KEY` from its secrets.
 
-```text
-results/report.html
-results/log.html
-```
+1. In the repository on GitHub, open **Settings → Environments** and create an environment named `test` if it does not already exist.
+2. Open that environment, add an environment secret named `CAT_API_KEY`, and paste the key as its value.
+3. The `robot-tests.yml` workflow associates its job with the `test` environment and passes the secret to the Robot test step.
+
+Keep the key in GitHub Secrets; do not add its value to the workflow file or repository.
+
+## 8. View Reports
+
+Open `results/report.html` and `results/log.html`.
 
 ## Project Structure
 
@@ -87,10 +112,10 @@ robot.toml              RobotCode project configuration
 
 
 ## Possible improvements
- - make sure all .robot file runs with robotcode
- - verify build response matches json schema
- - further investigate if can set default selector strategy so that for browser KW's data-testid= isn't required, (set selector prefix?)
+ - Verify build response matches json schema
+ - Further investigate if can set default selector strategy so that for browser KW's data-testid= isn't required, (set selector prefix?)
  - When running debugger for browser TC make headless=False for easier debugging
+ - Fix discrepency rule's between Robotidy and robocop
  
 
 ## Bugs

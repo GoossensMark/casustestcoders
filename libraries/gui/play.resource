@@ -8,7 +8,7 @@ Library         FakerLibrary
 *** Keywords ***
 Open play page
     [Arguments]    ${browser}=chromium
-    New Browser    ${browser}    headless=False
+    New Browser    ${browser}    headless=True
     New Page    ${play_url}
     Wait For Elements State    data-testid=character-name-input    visible    timeout=10s
 
