@@ -1,14 +1,16 @@
 *** Settings ***
-Resource    ../../libraries/gui/play.resource
-Resource    ../../libraries/helpers/files.resource
-Suite Teardown    Clear realtime test data 
-Test setup    Open play page
-Test Teardown    Close Browser
+Resource            ../../libraries/gui/play.resource
+Resource            ../../libraries/helpers/files.resource
+
+Suite Teardown      Clear realtime test data
+Test Setup          Open play page
+Test Teardown       Close Browser
+
 
 *** Test Cases ***
 Create an new character build
     ${build_type}=    Evaluate    random.choice($valid_builds)    modules=random
-    Select build type    ${build_type}    
+    Select build type    ${build_type}
     ${char_name}=    FakerLibrary.First Name
     Enter character name    ${char_name}
     Start new build    character_name=${char_name}    build_type=${build_type}

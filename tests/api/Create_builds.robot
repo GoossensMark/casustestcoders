@@ -1,11 +1,12 @@
 *** Settings ***
-Library         DataDriver    file=create_builds.csv
-Test Template   Create Build
-Resource    ../../libraries/api/ApiBuilds.resource
+Library             DataDriver    file=create_builds.csv
+Resource            ../../libraries/api/ApiBuilds.resource
+
+Test Template       Create Build
 
 
 *** Test Cases ***
-Create Build  ${build_name}   ${strength}    ${agility}    ${wisdom}    ${magic}    ${name_exists}    ${expected_status}
+Create Build    ${build_name}    ${strength}    ${agility}    ${wisdom}    ${magic}    ${name_exists}    ${expected_status}
 
 
 *** Keywords ***

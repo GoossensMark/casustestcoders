@@ -1,5 +1,6 @@
 *** Settings ***
-Library    OperatingSystem
+Library     OperatingSystem
+
 
 *** Keywords ***
 Clear realtime test data

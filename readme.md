@@ -38,22 +38,16 @@ rfbrowser init
 
 ## 5. Run Tests
 
-Run all tests:
+With the virtual environment activated, run all Robot Framework tests from the repository root:
 
-```bash
-robot -d results tests/
+```text
+robot tests
 ```
 
-Run only API tests:
+To save the generated reports and logs in `results/` instead of the repository root, run:
 
-```bash
-robot -d results tests/api/
-```
-
-Run only UI tests:
-
-```bash
-robot -d results tests/ui/
+```text
+robot -d results tests
 ```
 
 ## 6. View Reports
@@ -68,19 +62,28 @@ results/log.html
 ## Project Structure
 
 ```text
-tests/          Robot test cases
-libraries/      Python implementation
-resources/      Shared Robot resources
-data/           Test data
-results/        Test reports
+tests/
+  api/                 API test suites and their DataDriver CSV files
+  gui/                 GUI test suites
+libraries/
+  api/                 Reusable Robot keywords for API interactions
+  gui/                 Reusable Robot keywords for GUI interactions
+  helpers/             Shared Robot resources and helper keywords
+  environment.py       Shared environment variables and URLs
+testdata/
+  realtime/            Files generated or downloaded while tests run
+results/               Robot Framework output, log, and report files
+browser/               Browser Library artifacts, such as screenshots
+requirements.txt        Python dependencies for the project
+robot.toml              RobotCode project configuration
 ```
 
 ## Design Principle
 
-- **Robot Framework** = test scenarios
-- **Python** = business logic, API calls, page objects
-- Keep `.robot` files simple and readable
-- Implement reusable functionality in Python
+- **Robot Framework** = test scenarios and reusable keywords
+- **Resource files** = reusable API, GUI, and helper workflows
+- **Python** = shared environment configuration and values
+- Keep test suites focused on readable scenarios and reuse keywords from `libraries/`
 
 
 ## Possible improvements
@@ -92,3 +95,4 @@ results/        Test reports
 
 ## Bugs
  - name doesn't have to be unique when creating new build through API?
+ - The POST is not case sensitive but the GET is?

@@ -1,14 +1,14 @@
 *** Settings ***
-Variables    ../environment.py
-Resource    ../../libraries/api/ApiBuilds.resource
-Library    Browser
-Library    FakerLibrary
+Variables       ../environment.py
+Resource        ../../libraries/api/ApiBuilds.resource
+Library         Browser
+Library         FakerLibrary
+
 
 *** Keywords ***
 Open play page
     [Arguments]    ${browser}=chromium
     New Browser    ${browser}    headless=False
-    # New Browser    ${browser}
     New Page    ${play_url}
     Wait For Elements State    data-testid=character-name-input    visible    timeout=10s
 
@@ -19,7 +19,7 @@ Select build type
     Click    role=option[name="${build_type}" i]
 
 Enter character name
-    [Arguments]   ${character_name}=None
+    [Arguments]    ${character_name}=None
     Fill Text    data-testid=character-name-input    ${character_name}
     ${displayed_name}=    Get Text    data-testid=character-name
 
@@ -44,8 +44,7 @@ Submit login form
     Click    data-testid=login-submit-button
     Wait For Elements State    data-testid=logout-button    visible    timeout=10s
 
-
-Select clicker 
+Select clicker
     ${clicker_text}=    Get Text    data-testid=clicker-button
     ${clicks_before}=    Evaluate    int($clicker_text.split()[2])
     ${expected_clicks}=    Evaluate    $clicks_before - 1
@@ -55,23 +54,32 @@ Select clicker
 
 Select clicker 5 times
     FOR    ${index}    IN RANGE    5
-        Select clicker 
+        Select clicker
     END
-    Wait For Elements State    xpath=//button[@data-testid='clicker-button']/../span[@data-task='clicker']    visible    timeout=10s
+    Wait For Elements State
+    ...    xpath=//button[@data-testid='clicker-button']/../span[@data-task='clicker']
+    ...    visible
+    ...    timeout=10s
     Get Text    data-testid=toast-container    contains    +1 Level
 
 Type in text field
     [Arguments]    ${text}
     Fill Text    data-testid=typer-input    ${text}
-    Wait For Elements State    xpath=//input[@data-testid='typer-input']/../span[@data-task='typer']    visible    timeout=10s
+    Wait For Elements State
+    ...    xpath=//input[@data-testid='typer-input']/../span[@data-task='typer']
+    ...    visible
+    ...    timeout=10s
     Get Text    data-testid=toast-container    contains    +1 Level
 
 Upload file
     ${file_path}=    Get an cat picture
     ${promise}=    Promise To Upload File    ${file_path}
-    Click          data-testid=uploader-input
+    Click    data-testid=uploader-input
     ${upload_result}=    Wait For    ${promise}
-    Wait For Elements State    xpath=//input[@data-testid='uploader-input']/../span[@data-task='uploader']    visible    timeout=10s
+    Wait For Elements State
+    ...    xpath=//input[@data-testid='uploader-input']/../span[@data-task='uploader']
+    ...    visible
+    ...    timeout=10s
     Get Text    data-testid=toast-container    contains    +1 Level
 
 Set slider
@@ -90,9 +98,11 @@ Set slider
     END
     ${actual_value}=    Get Attribute    ${slider}    aria-valuenow
     Should Be Equal As Integers    ${actual_value}    ${target}
-    Wait For Elements State    xpath=//span[@data-testid='slider-input']/../span[@data-task='slider']    visible    timeout=10s
+    Wait For Elements State
+    ...    xpath=//span[@data-testid='slider-input']/../span[@data-task='slider']
+    ...    visible
+    ...    timeout=10s
     Get Text    data-testid=toast-container    contains    +1 Level
 
 Verify highest level reached
-     Wait For Elements State    data-testid=max-level-message    visible    timeout=10s
-    
+    Wait For Elements State    data-testid=max-level-message    visible    timeout=10s

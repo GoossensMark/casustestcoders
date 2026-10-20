@@ -1,17 +1,17 @@
 *** Settings ***
-Variables      ../environment.py
-Library        REST    ssl_verify=False
-Library        Collections
-Library        RequestsLibrary    WITH NAME    CatRequests
-Library        OperatingSystem
+Variables       ../environment.py
+Library         REST    ssl_verify=False
+Library         Collections
+Library         RequestsLibrary    WITH NAME    CatRequests
+Library         OperatingSystem
 
 
 *** Keywords ***
 GET an build
     [Arguments]    ${build_type}=${EMPTY}    ${expected_status}=200
-    ${resp}=    REST.GET     ${build_url}?build=${{$build_type.lower()}}                    # this creates a new instance
-    Should Be Equal As Integers  ${resp}[status]    ${expected_status}
-    RETURN   ${resp} 
+    ${resp}=    REST.GET    ${build_url}?build=${{$build_type.lower()}}    # this creates a new instance
+    Should Be Equal As Integers    ${resp}[status]    ${expected_status}
+    RETURN    ${resp}
 
 Build Type Should Be Valid
     [Arguments]    ${build_type}
@@ -23,16 +23,16 @@ Get an valid build
     [Arguments]    ${valid_build_type}
     ${resp}=    GET an build    ${valid_build_type}
     RETURN    ${resp}
-    
+
 Post an build
-    [Arguments]    ${name}=${EMPTY}    ${strength}=${EMPTY}    
+    [Arguments]    ${name}=${EMPTY}    ${strength}=${EMPTY}
     ...    ${agility}=${EMPTY}    ${wisdom}=${EMPTY}    ${magic}=${EMPTY}    ${expected_status}=200
     ${body}=    Evaluate
     ...    {"build": {"name": "${name}", "strength": ${strength}, "agility": ${agility}, "wisdom": ${wisdom}, "magic": ${magic}}}
-    
-    ${resp}=    REST.POST     ${build_url}    body=${body}             # this creates a new instance
-    Should Be Equal As Integers  ${resp}[status]    ${expected_status}
-    RETURN   ${resp} 
+
+    ${resp}=    REST.POST    ${build_url}    body=${body}    # this creates a new instance
+    Should Be Equal As Integers    ${resp}[status]    ${expected_status}
+    RETURN    ${resp}
 
 Get an cat picture
     [Arguments]    ${expected_status}=200
