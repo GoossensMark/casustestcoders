@@ -3,7 +3,7 @@
 ## 1. Clone the Repository
 
 ```bash
-git clone <repository-url>
+git clone https://github.com/GoossensMark/casustestcoders.git
 cd robot-project
 ```
 
